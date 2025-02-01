@@ -1,0 +1,17 @@
+[
+  {
+    "groupId": "group1@abc.com",
+    "enabled": true,
+    "mode": "1"
+  },
+  {
+    "groupId": "group2@abc.com",
+    "enabled": false,
+    "mode": "0"
+  },
+  {
+    "groupId": "group3@abc.com",
+    "enabled": true,
+    "mode": "2"
+  }
+]

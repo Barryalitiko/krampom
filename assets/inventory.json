@@ -1,0 +1,12 @@
+[
+  {
+    "userJid": "user1@s.whatsapp.net",
+    "ring": 1,
+    "divorcePapers": 0
+  },
+  {
+    "userJid": "user2@s.whatsapp.net",
+    "ring": 1,
+    "divorcePapers": 1
+  }
+]

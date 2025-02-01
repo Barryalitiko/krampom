@@ -1,0 +1,9 @@
+[
+  {
+    "userJid": "user1@s.whatsapp.net",
+    "partnerJid": "user2@s.whatsapp.net",
+    "date": "2025-01-01T10:00:00Z",
+    "groupId": "groupId12345@s.whatsapp.net",
+    "dailyLove": 0
+  }
+]

@@ -1,0 +1,10 @@
+[
+  {
+    "userJid": "usuario@dominio.com",
+    "kr": 50
+  },
+  {
+    "userJid": "otroUsuario@dominio.com",
+    "kr": 50
+  }
+]

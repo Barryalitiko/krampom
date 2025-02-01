@@ -1,0 +1,8 @@
+{
+  "group1@s.whatsapp.net": {
+    "enabled": true
+  },
+  "group2@s.whatsapp.net": {
+    "enabled": false
+  }
+}
