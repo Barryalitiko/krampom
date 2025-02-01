@@ -1,20 +1,3 @@
-/**
- * Script de
- * inicialização do bot.
- *
- * Este script é
- * responsável por
- * iniciar a conexão
- * com o WhatsApp.
- *
- * Não é recomendado alterar
- * este arquivo,
- * a menos que você saiba
- * o que está fazendo.
- *
- * @author Dev Gui
- */
-
 const path = require("path");
 const { question, onlyNumbers } = require("./utils");
 const {
@@ -27,7 +10,7 @@ const {
   proto,
   makeInMemoryStore,
   isJidNewsletter,
-} = require("baileys");
+} = require("@whiskeysockets/baileys");
 const NodeCache = require("node-cache");
 const pino = require("pino");
 const { load } = require("./loader");
@@ -78,15 +61,15 @@ async function connect() {
   });
 
   if (!socket.authState.creds.registered) {
-    warningLog("Credenciais ainda não configuradas!");
+    warningLog("Credenciales no configuradas!");
 
-    infoLog('Informe o número de telefone do bot (exemplo: "5511920202020"):');
+    infoLog('Ingrese su numero sin el + (ejemplo: "13733665556"):');
 
-    const phoneNumber = await question("Informe o número de telefone do bot: ");
+    const phoneNumber = await question("Ingresa el numero: ");
 
     if (!phoneNumber) {
       errorLog(
-        'Número de telefone inválido! Tente novamente com o comando "npm start".'
+        'Numero de telefono inválido! Reinicia con el comando "npm start".'
       );
 
       process.exit(1);
@@ -94,7 +77,7 @@ async function connect() {
 
     const code = await socket.requestPairingCode(onlyNumbers(phoneNumber));
 
-    sayLog(`Código de pareamento: ${code}`);
+    sayLog(`Código de Emparejamiento: ${code}`);
   }
 
   socket.ev.on("connection.update", async (update) => {
@@ -105,32 +88,32 @@ async function connect() {
         lastDisconnect.error?.output?.statusCode !== DisconnectReason.loggedOut;
 
       if (statusCode === DisconnectReason.loggedOut) {
-        errorLog("Bot desconectado!");
+        errorLog("Kram desconectado!");
       } else {
         switch (statusCode) {
           case DisconnectReason.badSession:
-            warningLog("Sessão inválida!");
+            warningLog("Sesion no válida!");
             break;
           case DisconnectReason.connectionClosed:
-            warningLog("Conexão fechada!");
+            warningLog("Conexion cerrada!");
             break;
           case DisconnectReason.connectionLost:
-            warningLog("Conexão perdida!");
+            warningLog("Conexion perdida!");
             break;
           case DisconnectReason.connectionReplaced:
-            warningLog("Conexão substituída!");
+            warningLog("Conexion de reemplazo!");
             break;
           case DisconnectReason.multideviceMismatch:
-            warningLog("Dispositivo incompatível!");
+            warningLog("Dispositivo incompatible!");
             break;
           case DisconnectReason.forbidden:
-            warningLog("Conexão proibida!");
+            warningLog("Conexion prohibida!");
             break;
           case DisconnectReason.restartRequired:
-            infoLog('Me reinicie por favor! Digite "npm start".');
+            infoLog('Krampus reiniciado! Reinicia con "npm start".');
             break;
           case DisconnectReason.unavailableService:
-            warningLog("Serviço indisponível!");
+            warningLog("Servicio no disponible!");
             break;
         }
 
@@ -138,9 +121,9 @@ async function connect() {
         load(newSocket);
       }
     } else if (connection === "open") {
-      successLog("Fui conectado com sucesso!");
+      successLog("Operacion Marshall");
     } else {
-      infoLog("Atualizando conexão...");
+      infoLog("Cargando datos...");
     }
   });
 
