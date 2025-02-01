@@ -1,18 +1,11 @@
-/**
- * Funções úteis para trabalhar
- * com dados.
- *
- * @author Dev Gui
- */
 const path = require("path");
 const fs = require("fs");
 
 const databasePath = path.resolve(__dirname, "..", "..", "database");
 
 const INACTIVE_GROUPS_FILE = "inactive-groups";
-const NOT_WELCOME_GROUPS_FILE = "not-welcome-groups";
-const INACTIVE_AUTO_RESPONDER_GROUPS_FILE = "inactive-auto-responder-groups";
 const ANTI_LINK_GROUPS_FILE = "anti-link-groups";
+const WELCOME_GROUPS_FILE = "welcome-groups";
 
 function createIfNotExists(fullPath) {
   if (!fs.existsSync(fullPath)) {
@@ -36,164 +29,92 @@ function writeJSON(jsonFile, data) {
   fs.writeFileSync(fullPath, JSON.stringify(data));
 }
 
+// Manejo del estado general de los grupos
 exports.activateGroup = (groupId) => {
-  const filename = INACTIVE_GROUPS_FILE;
-
-  const inactiveGroups = readJSON(filename);
-
-  const index = inactiveGroups.indexOf(groupId);
-
-  if (index === -1) {
-    return;
-  }
-
-  inactiveGroups.splice(index, 1);
-
-  writeJSON(filename, inactiveGroups);
+    const inactiveGroups = readJSON(INACTIVE_GROUPS_FILE);
+    const index = inactiveGroups.indexOf(groupId);
+    if (index !== -1) {
+        inactiveGroups.splice(index, 1);
+        writeJSON(INACTIVE_GROUPS_FILE, inactiveGroups);
+    }
 };
 
 exports.deactivateGroup = (groupId) => {
-  const filename = INACTIVE_GROUPS_FILE;
-
-  const inactiveGroups = readJSON(filename);
-
-  if (!inactiveGroups.includes(groupId)) {
-    inactiveGroups.push(groupId);
-  }
-
-  writeJSON(filename, inactiveGroups);
+    const inactiveGroups = readJSON(INACTIVE_GROUPS_FILE);
+    if (!inactiveGroups.includes(groupId)) {
+        inactiveGroups.push(groupId);
+        writeJSON(INACTIVE_GROUPS_FILE, inactiveGroups);
+    }
 };
 
 exports.isActiveGroup = (groupId) => {
-  const filename = INACTIVE_GROUPS_FILE;
-
-  const inactiveGroups = readJSON(filename);
-
-  return !inactiveGroups.includes(groupId);
+    const inactiveGroups = readJSON(INACTIVE_GROUPS_FILE);
+    return !inactiveGroups.includes(groupId);
 };
 
+// Manejo de la configuración de bienvenida
 exports.activateWelcomeGroup = (groupId) => {
-  const filename = NOT_WELCOME_GROUPS_FILE;
-
-  const notWelcomeGroups = readJSON(filename);
-
-  const index = notWelcomeGroups.indexOf(groupId);
-
-  if (index === -1) {
-    return;
-  }
-
-  notWelcomeGroups.splice(index, 1);
-
-  writeJSON(filename, notWelcomeGroups);
+    const welcomeGroups = readJSON(WELCOME_GROUPS_FILE);
+    welcomeGroups[groupId] = { enabled: true, mode: "1" };
+    writeJSON(WELCOME_GROUPS_FILE, welcomeGroups);
 };
 
 exports.deactivateWelcomeGroup = (groupId) => {
-  const filename = NOT_WELCOME_GROUPS_FILE;
+    const welcomeGroups = readJSON(WELCOME_GROUPS_FILE);
+    delete welcomeGroups[groupId];
+    writeJSON(WELCOME_GROUPS_FILE, welcomeGroups);
+};
 
-  const notWelcomeGroups = readJSON(filename);
+exports.setWelcomeMode = (groupId, mode) => {
+    const welcomeGroups = readJSON(WELCOME_GROUPS_FILE);
+    if (welcomeGroups[groupId]) {
+        welcomeGroups[groupId].mode = mode;
+        writeJSON(WELCOME_GROUPS_FILE, welcomeGroups);
+    }
+};
 
-  if (!notWelcomeGroups.includes(groupId)) {
-    notWelcomeGroups.push(groupId);
-  }
-
-  writeJSON(filename, notWelcomeGroups);
+exports.getWelcomeMode = (groupId) => {
+    const welcomeGroups = readJSON(WELCOME_GROUPS_FILE);
+    return welcomeGroups[groupId] ? welcomeGroups[groupId].mode : null;
 };
 
 exports.isActiveWelcomeGroup = (groupId) => {
-  const filename = NOT_WELCOME_GROUPS_FILE;
-
-  const notWelcomeGroups = readJSON(filename);
-
-  return !notWelcomeGroups.includes(groupId);
+    const welcomeGroups = readJSON(WELCOME_GROUPS_FILE);
+    return welcomeGroups[groupId] && welcomeGroups[groupId].enabled;
 };
 
-exports.getAutoResponderResponse = (match) => {
-  const filename = "auto-responder";
-
-  const responses = readJSON(filename);
-
-  const matchUpperCase = match.toLocaleUpperCase();
-
-  const data = responses.find(
-    (response) => response.match.toLocaleUpperCase() === matchUpperCase
-  );
-
-  if (!data) {
-    return null;
-  }
-
-  return data.answer;
-};
-
-exports.activateAutoResponderGroup = (groupId) => {
-  const filename = INACTIVE_AUTO_RESPONDER_GROUPS_FILE;
-
-  const inactiveAutoResponderGroups = readJSON(filename);
-
-  const index = inactiveAutoResponderGroups.indexOf(groupId);
-
-  if (index === -1) {
-    return;
-  }
-
-  inactiveAutoResponderGroups.splice(index, 1);
-
-  writeJSON(filename, inactiveAutoResponderGroups);
-};
-
-exports.deactivateAutoResponderGroup = (groupId) => {
-  const filename = INACTIVE_AUTO_RESPONDER_GROUPS_FILE;
-
-  const inactiveAutoResponderGroups = readJSON(filename);
-
-  if (!inactiveAutoResponderGroups.includes(groupId)) {
-    inactiveAutoResponderGroups.push(groupId);
-  }
-
-  writeJSON(filename, inactiveAutoResponderGroups);
-};
-
-exports.isActiveAutoResponderGroup = (groupId) => {
-  const filename = INACTIVE_AUTO_RESPONDER_GROUPS_FILE;
-
-  const inactiveAutoResponderGroups = readJSON(filename);
-
-  return !inactiveAutoResponderGroups.includes(groupId);
-};
-
-exports.activateAntiLinkGroup = (groupId) => {
-  const filename = ANTI_LINK_GROUPS_FILE;
-
-  const antiLinkGroups = readJSON(filename);
-
-  if (!antiLinkGroups.includes(groupId)) {
-    antiLinkGroups.push(groupId);
-  }
-
-  writeJSON(filename, antiLinkGroups);
+// Manejo del anti-link
+exports.activateAntiLinkGroup = (groupId, mode = "1") => {
+    const filename = ANTI_LINK_GROUPS_FILE;
+    const antiLinkGroups = readJSON(filename);
+    antiLinkGroups[groupId] = { enabled: true, mode };
+    writeJSON(filename, antiLinkGroups);
 };
 
 exports.deactivateAntiLinkGroup = (groupId) => {
-  const filename = ANTI_LINK_GROUPS_FILE;
+    const filename = ANTI_LINK_GROUPS_FILE;
+    const antiLinkGroups = readJSON(filename);
+    delete antiLinkGroups[groupId];
+    writeJSON(filename, antiLinkGroups);
+};
 
-  const antiLinkGroups = readJSON(filename);
+exports.setAntiLinkMode = (groupId, mode) => {
+    const filename = ANTI_LINK_GROUPS_FILE;
+    const antiLinkGroups = readJSON(filename);
+    if (antiLinkGroups[groupId]) {
+        antiLinkGroups[groupId].mode = mode;
+        writeJSON(filename, antiLinkGroups);
+    }
+};
 
-  const index = antiLinkGroups.indexOf(groupId);
-
-  if (index === -1) {
-    return;
-  }
-
-  antiLinkGroups.splice(index, 1);
-
-  writeJSON(filename, antiLinkGroups);
+exports.getAntiLinkMode = (groupId) => {
+    const filename = ANTI_LINK_GROUPS_FILE;
+    const antiLinkGroups = readJSON(filename);
+    return antiLinkGroups[groupId] ? antiLinkGroups[groupId].mode : null;
 };
 
 exports.isActiveAntiLinkGroup = (groupId) => {
-  const filename = ANTI_LINK_GROUPS_FILE;
-
-  const antiLinkGroups = readJSON(filename);
-
-  return antiLinkGroups.includes(groupId);
+    const filename = ANTI_LINK_GROUPS_FILE;
+    const antiLinkGroups = readJSON(filename);
+    return antiLinkGroups[groupId] && antiLinkGroups[groupId].enabled;
 };
