@@ -10,7 +10,7 @@ const {
   proto,
   makeInMemoryStore,
   isJidNewsletter,
-} = require("@whiskeysockets/baileys");
+} = require("baileys");
 const NodeCache = require("node-cache");
 const pino = require("pino");
 const { load } = require("./loader");
