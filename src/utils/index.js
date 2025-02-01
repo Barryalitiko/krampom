@@ -1,10 +1,5 @@
-/**
- * Funções diversas.
- *
- * @author Dev Gui
- */
 const { downloadContentFromMessage } = require("baileys");
-const { PREFIX, COMMANDS_DIR, TEMP_DIR } = require("../config");
+const { PREFIX, COMMANDS_DIR, TEMP_DIR } = require("../krampus");
 const path = require("path");
 const fs = require("fs");
 const { writeFile } = require("fs/promises");
@@ -66,7 +61,7 @@ exports.extractDataFromMessage = (webMessage) => {
   const commandWithoutPrefix = command.replace(new RegExp(`^[${PREFIX}]+`), "");
 
   return {
-    args: this.splitByCharacters(args.join(" "), ["\\", "|", "/"]),
+    args: this.splitByCharacters(args.join(" "), ["\\", "|"]),
     commandName: this.formatCommand(commandWithoutPrefix),
     fullArgs: args.join(" "),
     fullMessage,
@@ -139,25 +134,6 @@ exports.download = async (webMessage, fileName, context, extension) => {
   return filePath;
 };
 
-function readDirectoryRecursive(dir) {
-  const results = [];
-  const list = fs.readdirSync(dir, { withFileTypes: true });
-
-  for (const item of list) {
-    const itemPath = path.join(dir, item.name);
-    if (item.isDirectory()) {
-      results.push(...readDirectoryRecursive(itemPath));
-    } else if (
-      !item.name.startsWith("_") &&
-      (item.name.endsWith(".js") || item.name.endsWith(".ts"))
-    ) {
-      results.push(itemPath);
-    }
-  }
-
-  return results;
-}
-
 exports.findCommandImport = (commandName) => {
   const command = this.readCommandImports();
 
@@ -196,17 +172,14 @@ exports.readCommandImports = () => {
 
   for (const subdir of subdirectories) {
     const subdirectoryPath = path.join(COMMANDS_DIR, subdir);
-
-    const files = readDirectoryRecursive(subdirectoryPath)
-      .map((filePath) => {
-        try {
-          return require(filePath);
-        } catch (err) {
-          console.error(`Erro ao importar ${filePath}:`, err);
-          return null;
-        }
-      })
-      .filter(Boolean);
+    const files = fs
+      .readdirSync(subdirectoryPath)
+      .filter(
+        (file) =>
+          !file.startsWith("_") &&
+          (file.endsWith(".js") || file.endsWith(".ts"))
+      )
+      .map((file) => require(path.join(subdirectoryPath, file)));
 
     commandImports[subdir] = files;
   }
@@ -214,7 +187,17 @@ exports.readCommandImports = () => {
   return commandImports;
 };
 
-const onlyNumbers = (text) => text.replace(/[^0-9]/g, "");
+const onlyNumbers = (text) => {
+  if (typeof text !== "string") return ""; // Evita errores si text es undefined o no es string
+  return text.replace(/[^0-9]/g, "");
+};
+
+exports.onlyNumbers = onlyNumbers;
+
+exports.toUserJid = (number) => {
+  if (!number) return ""; // Evita pasar undefined o null
+  return `${onlyNumbers(number)}@s.whatsapp.net`;
+};
 
 exports.onlyNumbers = onlyNumbers;
 
