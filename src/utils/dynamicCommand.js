@@ -40,7 +40,7 @@ antiLinkMode === "2" ||
 if (!(await isAdmin({ remoteJid, userJid, socket }))) {
 await socket.groupParticipantsUpdate(remoteJid, [userJid], "remove");
 await sendReply(
-"👻 𝙺𝚛𝚊𝚖𝚙𝚞𝚜.𝚋𝚘𝚝 👻 Baneado por enviar link"
+"Baneado por enviar link\nKrampus OM bot"
 );
 await socket.sendMessage(remoteJid, {
 delete: {
@@ -84,7 +84,7 @@ await sendErrorReply(error.message);
 } else {
 errorLog("Error al ejecutar el comando", error);
 await sendErrorReply(
-`👻 𝙺𝚛𝚊𝚖𝚙𝚞𝚜.𝚋𝚘𝚝 👻 Ocurrio un error al ejecutar el comando ${command.name}! 📄 *Detalles*: ${error.message}`
+`Ocurrio un error al ejecutar el comando ${command.name}! 📄 *Detalles*: ${error.message}`
 );
 }
 }
