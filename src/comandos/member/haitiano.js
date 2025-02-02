@@ -46,7 +46,7 @@ module.exports = {
       // Enviar el beso
       await sendReact("🗑", remoteJid);
       await socket.sendMessage(remoteJid, {
-        video: fs.readFileSync("assets/sx/beso.mp4"),
+        video: fs.readFileSync("assets/sx/sonrisa.mp4"),
         caption: `> ꜱᴇ ᴍᴇ ʀᴇᴠᴏʟᴠɪᴏ ᴇʟ ᴇꜱᴛᴏᴍᴀɢᴏ\n@${userJid.split("@")[0]} piensa que @${targetJid.split("@")[0]} es de 𝐇𝐀𝐈𝐓𝐈\n Que ascoooooooo`,
         gifPlayback: true,
         mentions: [userJid, targetJid]
