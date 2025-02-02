@@ -11,7 +11,7 @@ name: "anti-link",
 description: "Activa/desactiva/configura el recurso de anti-link en el grupo.",
 commands: ["antilink"],
 usage: `${PREFIX}anti-link (0/1/2)`,
-handle: async ({ args, sendReply, sendSuccessReact, remoteJid }) => {
+handle: async ({ args, sendReply, sendLinkReact, remoteJid }) => {
 if (!args.length) {
 throw new InvalidParameterError(
 "👻 Krampus.bot 👻 Activa con 1, 2 o 0 (conectar, conectar completo o desconectar)!"
@@ -33,7 +33,7 @@ if (mode === "0") {
   setAntiLinkMode(remoteJid, mode);
 }
 
-await sendSuccessReact();
+await sendLinkReact();
 
 const context =
   mode === "0"
