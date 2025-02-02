@@ -53,6 +53,8 @@ COMANDOS:
 ⌠⅏⌡➟ ${PREFIX}beso
 ⌠⅏⌡➟ ${PREFIX}penetrar
 ⌠⅏⌡➟ ${PREFIX}tocar
+⌠⅏⌡➟ ${PREFIX}haiti
+⌠⅏⌡➟ ${PREFIX}saborear
 
 »»————- - ————-««
 Operacion Marshall
