@@ -16,7 +16,7 @@ module.exports = {
     replyJid,
     sendReply,
     userJid,
-    sendSuccessReact,
+    sendBasuraReact,
   }) => {
     if (!args.length && !isReply) {
       throw new InvalidParameterError(
@@ -47,7 +47,7 @@ module.exports = {
       "remove"
     );
 
-    await sendSuccessReact();
+    await sendBasuraReact();
 
     await sendReply("👻 𝙺𝚛𝚊𝚖𝚙𝚞𝚜.𝚋𝚘𝚝 👻 He sacado la basura");
   },
