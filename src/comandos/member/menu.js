@@ -29,6 +29,8 @@ usa ${PREFIX}menu2 para ver mas detalles
 ══════════.K.═
 𝗠𝗜𝗘𝗠𝗕𝗥𝗢𝗦
 ⌠⅏⌡➟ ${PREFIX}link
+⌠⅏⌡➟ ${PREFIX}menu
+⌠⅏⌡➟ ${PREFIX}menu2
 ⌠⅏⌡➟ ${PREFIX}reglas
 ⌠⅏⌡➟ ${PREFIX}musica/m + nombre de la canción
 ⌠⅏⌡➟ ${PREFIX}video/v + nombre del video
