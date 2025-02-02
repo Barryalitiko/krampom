@@ -1,13 +1,14 @@
 const { PREFIX } = require("../../krampus");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
-  name: "menu",
-  description: "Muestra el menú de comandos.",
-  commands: ["menu2"],
-  usage: `${PREFIX}menu`,
-  
-  handle: async ({ socket, remoteJid, sendReply }) => {
-    const menuMessage = `»»————- - ————-««
+name: "menu2",
+description: "Muestra el menú de comandos detallado.",
+commands: ["menu2"],
+usage: `${PREFIX}menu2`,
+handle: async ({ socket, remoteJid, sendReply }) => {
+const menuMessage = `»»————- - ————-««
 > 𝗞𝗿𝗮𝗺𝗽𝘂𝘀 𝗢𝗠 𝗯𝗼𝘁
 
 ═════════.K.═
@@ -80,6 +81,10 @@ COMANDOS:
 Operacion Marshall
 »»————- - ————-««`;
 
-    await sendReply(menuMessage);
-  },
+    await socket.sendMessage(remoteJid, {
+  video: fs.readFileSync("assets/sx/menu2.mp4"),
+  caption: menuMessage,
+  gifPlayback: true,
+});
+},
 };
