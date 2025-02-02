@@ -40,7 +40,7 @@ antiLinkMode === "2" ||
 if (!(await isAdmin({ remoteJid, userJid, socket }))) {
 await socket.groupParticipantsUpdate(remoteJid, [userJid], "remove");
 await sendReply(
-"Baneado por enviar link\nKrampus OM bot"
+"Baneado por enviar link\n> Krampus OM bot"
 );
 await socket.sendMessage(remoteJid, {
 delete: {
