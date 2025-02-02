@@ -10,6 +10,8 @@ module.exports = {
     const menuMessage = `»»————- - ————-««
 > 𝗞𝗿𝗮𝗺𝗽𝘂𝘀 𝗢𝗠 𝗯𝗼𝘁
 
+usa ${PREFIX}menu2 para ver mas detalles
+
 ═════════.K.═
 
 COMANDOS:
@@ -30,6 +32,7 @@ COMANDOS:
 ⌠⅏⌡➟ ${PREFIX}tag
 ⌠⅏⌡➟ ${PREFIX}todos
 ⌠⅏⌡➟ ${PREFIX}reglas
+⌠⅏⌡➟ ${PREFIX}ban
 
 ═════════.K.═
 
@@ -57,7 +60,7 @@ COMANDOS:
 ⌠⅏⌡➟ ${PREFIX}saborear
 
 »»————- - ————-««
-Operacion Marshall
+> Operacion Marshall
 »»————- - ————-««`;
 
     await sendReply(menuMessage);
