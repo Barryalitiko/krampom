@@ -67,7 +67,7 @@ return;
 
 if (!(await checkPermission({ type, ...paramsHandler }))) {
 await sendErrorReply(
-"👻 𝙺𝚛𝚊𝚖𝚙𝚞𝚜.𝚋𝚘𝚝 👻 No tienes permitido usar el comando"
+"Upss... No eres administador,no tienes permitido usar el comando\nKrampus OM bot"
 );
 return;
 }
