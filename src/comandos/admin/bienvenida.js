@@ -11,7 +11,7 @@ name: "welcome",
 description: "Activa, desactiva o configura la bienvenida",
 commands: ["welcome", "bienvenida"],
 usage: `${PREFIX}welcome (0/1/2)`,
-handle: async ({ args, sendReply, sendSuccessReact, remoteJid }) => {
+handle: async ({ args, sendReply, sendWelcomeReact, remoteJid }) => {
 if (!args.length) {
 throw new InvalidParameterError(
 "\n> Krampus OM bot\nEscribe 0, 1 o 2 para configurar la bienvenida:\n\n" +
@@ -39,7 +39,7 @@ if (option === "0") {
   setWelcomeMode(remoteJid, option);
 }
 
-await sendSuccessReact();
+await sendWelcomeReact();
 
 const context =
   option === "0"
