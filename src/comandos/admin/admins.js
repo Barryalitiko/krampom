@@ -23,7 +23,7 @@ module.exports = {
     try {
       if (commandName === "promote") {
         await socket.groupParticipantsUpdate(remoteJid, [mentionedUser], "promote");
-        await sendReact("✅");
+        await sendReact("👮🏻‍♂️");
         await sendReply(`@${args[0]} ahora es administrador.`);
       } else if (commandName === "demote") {
         await socket.groupParticipantsUpdate(remoteJid, [mentionedUser], "demote");
