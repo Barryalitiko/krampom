@@ -11,7 +11,9 @@ module.exports = {
     const menuMessage = `»»————- - ————-««
 > 𝗞𝗿𝗮𝗺𝗽𝘂𝘀 𝗢𝗠 𝗯𝗼𝘁
 usa ${PREFIX}menu2 para ver mas detalles
-══════════.K.═ COMANDOS: ═.K.═════════
+══════════.K.═ 
+COMANDOS: 
+═.K.═════════
 𝗔𝗗𝗠𝗜𝗡𝗦
 ⌠⅏⌡➟ ${PREFIX}cerrar
 ⌠⅏⌡➟ ${PREFIX}abrir
