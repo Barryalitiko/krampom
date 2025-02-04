@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 
-const databasePath = path.resolve(__dirname, "..", "..", "database");
+const databasePath = path.resolve(process.cwd(), "assets");
 
 const INACTIVE_GROUPS_FILE = "inactive-groups";
 const ANTI_LINK_GROUPS_FILE = "anti-link-groups";
